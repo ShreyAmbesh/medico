@@ -64,7 +64,7 @@ Download
  - Android SDK
  - Android Studio
  - AVM
- > Run lib/check.dart in Android Studio on AVD / Test device with Developer tools -> USB Debugging Emabled
+ > Run lib/check.dart in Android Studio on AVD / Test device with Developer tools -> USB Debugging Enabled
 
 >Run Flutter doctor to fix any installation issues
 ```sh
