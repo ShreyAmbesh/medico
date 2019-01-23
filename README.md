@@ -65,6 +65,7 @@ Download
  - Android Studio
  - AVM
  > Run lib/check.dart in Android Studio on AVD / Test device with Developer tools -> USB Debugging Enabled
+ > All the executable parts of the program are located in lib/
 
 >Run Flutter doctor to fix any installation issues
 ```sh
