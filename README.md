@@ -1,6 +1,7 @@
 # Medico
 
 ![FLUTTER](https://flutter.io/assets/flutter-lockup-4cb0ee072ab312e59784d9fbf4fb7ad42688a7fdaea1270ccf6bbf4f34b7e03f.svg)
+![FLUTTER](https://ethereum.org/images/logos/ETHEREUM-LOGO_LANDSCAPE_Black_small.png)
 
 
 Medico is a cross-platform Block Chain Based Application which performs Data and Sentimental Analysis using Machine Learning Algorithms.
