@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      // Note: This example requires that you consent to location sharing when
+      // prompted by your browser. If you see the error "The Geolocation service
+      // failed.", it means you probably did not give permission for the browser to
+      // locate you.
+      var map, infoWindow;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 20.296059, lng: 85.824539},
+          zoom: 13
+        });
+        infoWindow = new google.maps.InfoWindow;
+        
+        google.maps.event.addListener(map, 'click', function(event) {
+            marker = new google.maps.Marker({position: event.latLng, map: map});
+            console.log(event.latLng);   // Get latlong info as object.
+            console.log( "Latitude: "+event.latLng.lat()+" "+", longitude: "+event.latLng.lng()); // Get separate lat long.
+            var bounds = {
+          north: event.latLng.lat(),
+          south: event.latLng.lat(),
+          east: event.latLng.lng(),
+          west: event.latLng.lng()
+        };
+          var rectangle = new google.maps.Rectangle({
+                  bounds: bounds,
+                  editable: true,
+                });
+                rectangle.setMap(map);
+        });
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            // var pos = {
+            //   lat: position.coords.latitude,
+            //   lng: position.coords.longitude
+            // };
+            // var pos = {
+            //   lat: 20.296059,
+            //   lng: 85.824539
+            // };
+            
+            // infoWindow.setPosition(pos);
+            // infoWindow.setContent('Head Office');
+             infoWindow.open(map);
+            // map.setCenter(pos);
+            
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+            var marker = new google.maps.Marker({
+                position: pos,
+                map: map,
+                title: 'Hello World!'
+        });
+        var locations = [
+            ['1', 20.313720903877954, 85.81850051879883, 4],
+            ['2', 20.285719071571556, 85.7716672958984, 5],
+            ['3', 20.26026464944022, 85.77747344970703, 3],
+            ['4', 20.264302711448277, 85.82583497761232, 2],
+            ['5', 20.307454456629202, 85.87407182453614, 1]
+        ];
+        var count;
+
+  for (count = 0; count < locations.length; count++) {  
+    new google.maps.Marker({
+      position: new google.maps.LatLng(locations[count][1], locations[count][2]),
+      map: map,
+      title: locations[count][0]
+      });
+   }
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+      }
+
+      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        // infoWindow.setContent(browserHasGeolocation ?
+        //                       'Error: The Geolocation service failed.' :
+        //                       'Error: Your browser doesn\'t support geolocation.');
+        var marker = new google.maps.Marker({
+                position: pos,
+                map: map,
+                title: 'Hello World!'
+        });
+        var locations = [
+            ['1', 20.313720903877954, 85.81850051879883, 4],
+            ['2', 20.285719071571556, 85.7716672958984, 5],
+            ['3', 20.26026464944022, 85.77747344970703, 3],
+            ['4', 20.264302711448277, 85.82583497761232, 2],
+            ['5', 20.307454456629202, 85.87407182453614, 1]
+        ];
+        var count;
+
+  for (count = 0; count < locations.length; count++) {  
+    new google.maps.Marker({
+      position: new google.maps.LatLng(locations[count][1], locations[count][2]),
+      map: map,
+      title: locations[count][0]
+      });
+   }
+   
+   
+        //infoWindow.open(map);
+      }
+      
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA43_nLsrB7z94m0rG-Kybnh3D-ZMYhfRU&callback=initMap"
+    async defer></script>
+  </body>
+</html>

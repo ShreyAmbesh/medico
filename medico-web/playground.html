@@ -1,0 +1,82 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Playground</title>
+    <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBiPUt-tCMy1sQT2b_X_BF3NbAlRxi_Bn0",
+    authDomain: "geohealth-80183.firebaseapp.com",
+    databaseURL: "https://geohealth-80183.firebaseio.com",
+    projectId: "geohealth-80183",
+    storageBucket: "geohealth-80183.appspot.com",
+    messagingSenderId: "961315591987"
+  };
+  firebase.initializeApp(config);
+  function reqMeds(){
+        var database = firebase.database();
+        // Request Medicines
+        // firebase.database().ref('cmo-request/').push({
+        //     user: "doctor",
+        //     med: "Carbol 50",
+        //     quantity: "50",
+        //     center: "Apollo Hospital",
+        //     MDUID: "452",
+        //     status: "nothing"
+        // });
+
+        // Hospitals Add
+        // firebase.database().ref('mdus/').push({
+        //     name: "SUM Hospital",
+        //     mduid: "896",
+        //     meds:{
+        //         Doloris200: "900",
+        //         Crocin150: "250",
+        //         Kalpal200: "1240",
+        //         Zifi50: "70"
+        //     }
+        // });  
+        // let medicineArray = ['Doloris200','Crocin150','Kalpal200','Zifi50']
+        // var starCountRef = firebase.database().ref('mdus/');
+        // starCountRef.on('value', function(snapshot) {
+        //     snapshot.forEach((cs)=>{
+        //         console.log(`Name: ${cs.val().name}`)
+        //         console.log(`MDUID: ${cs.val().mduid}`)
+        //         for(medName in cs.val().meds){
+        //             console.log(medName + "-" +cs.val().meds[medName]);
+        //         }
+        //     })
+        // });
+
+
+        //Supply Chain
+        // firebase.database().ref('supchain/').push({
+        //     toMDUID: "789",
+        //     status: "2",
+        //     meds:{
+        //         Crocin150: 12,
+        //         Doloris200: 40
+        //     }
+        // });  
+            
+        firebase.database().ref('transactions/').push({
+            mduid: "123",
+            center: "Kalinga Hospital",
+            pid: "91",
+            prid: "73834",
+            purl: "http://www.coneofsilence.info/wp-content/uploads/2013/01/tj201301160953-2.jpg",
+            qty: "2",
+            med: "Crocin150"
+        });
+
+  }
+</script>
+
+</head>
+<body>
+    
+</body>
+</html>
