@@ -35,6 +35,7 @@ For Organisations:
  - Scheduled dispatch
  - Machine Learning Based Graphs
 
+>
 >The App can be accessed using:
 >  Android
 >  IOS
@@ -63,6 +64,7 @@ Download
  - Android SDK
  - Android Studio
  - AVM
+ >lib/check.dart
 
 >Run Flutter doctor to fix any installation issues
 ```sh
