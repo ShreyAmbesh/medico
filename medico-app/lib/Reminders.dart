@@ -14,15 +14,15 @@ class _RemindersState extends State<Reminders> {
         home: Scaffold(
             appBar: AppBar(title: Text('Reminders'),
             centerTitle: true,),
-            body: ListView.builder(itemCount: 30,itemBuilder: (ctx, index) {
+            body: ListView.builder(itemCount: 2,itemBuilder: (ctx, index) {
               if(index%2==0)
                 {return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: CachedNetworkImageProvider(
                         'https://images.theconversation.com/files/101120/original/image-20151106-16242-12xhw43.jpg'),
                   ),
-                  title: Text('Take Your Dorolis'),
-                  subtitle: Text('2 Pills at 8:00 PM'),
+                  title: Text('Take Your Calpal'),
+                  subtitle: Text('2 Pills at 5:00 PM'),
                 );}
                 else
                   {return ListTile(
@@ -30,8 +30,8 @@ class _RemindersState extends State<Reminders> {
                       backgroundImage: CachedNetworkImageProvider(
                           'http://topendtraveldoctor.com.au/wp-content/uploads/2016/12/anonymous-female.png'),
                     ),
-                    title: Text('Meet Dr. Seghal'),
-                    subtitle: Text('At 2:00 PM'),
+                    title: Text('Meet Dr. Suresh K'),
+                    subtitle: Text('At 8:00 PM'),
                   );}
             })));
   }

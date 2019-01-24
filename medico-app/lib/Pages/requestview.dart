@@ -8,10 +8,10 @@ class RequestView extends StatelessWidget {
         child: Center(
       child: ListView.builder(
           physics: BouncingScrollPhysics(),
-          itemCount: 4,
+          itemCount: 3,
           itemBuilder: (ctx, i) {
             return
-              i==0?buildRequest():buildReview()
+              i==0?buildRequest():buildReview(i)
               ;
           }),
     ));
@@ -25,7 +25,7 @@ class RequestView extends StatelessWidget {
             "Your Illness",
             style: TextStyle(fontSize: 18.0,color: Colors.lightBlue),
           ),
-          Text("Description"),
+          Text("Feverish"),
                     
         ],
       ),
@@ -42,7 +42,7 @@ class RequestView extends StatelessWidget {
     );
   }
 
-  Card buildReview() {
+  Card buildReview(int ind) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -51,14 +51,14 @@ class RequestView extends StatelessWidget {
             Row(
               children: <Widget>[
                 Text(
-                  "Doctor Name",
+                  ind==1?'Dr. Sudhir C':'Dr. K P Ganesh',
                   style: TextStyle(fontSize: 18.0),
                 ),
                 Spacer(),
                 SmoothStarRating(
                   allowHalfRating: false,
                   starCount: 5,
-                  rating: 3,
+                  rating: ind==1?3.5:2,
                   size: 10.0,
                   color: Colors.yellow,
                   borderColor: Colors.grey,
@@ -69,7 +69,7 @@ class RequestView extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: <Widget>[
-                  Text("Ths is the review and best plan"),
+                  Text(ind==1?'Satisfied By The Review':'You Can Try another Medicine'),
                 ],
               ),
             ),

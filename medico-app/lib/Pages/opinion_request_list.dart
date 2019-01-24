@@ -21,36 +21,39 @@ class _OpinionRequestListState extends State<OpinionRequestList> {
         itemBuilder: (ctx, index) {
           return Padding(
             padding: const EdgeInsets.all(2.0),
-            child: buildCard(),
+            child: buildCard(index),
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-            return PrescriptionRequestList();
-          }));
-        },
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom:60.0),
+        child: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+              return PrescriptionRequestList();
+            }));
+          },
+        ),
       ),
     );
   }
 
-  Card buildCard() {
+  Card buildCard(int ind) {
     return Card(
       child: Column(
         children: <Widget>[
           ListTile(
             leading: Icon(Icons.assignment_ind),
-            title: Text(widget.title),
-            subtitle: Text(widget.subtitle),
+            title: Text(ind==0?'Feverish':ind==1?'InterGalactic Disorder':'Pale Eyes'),
+            subtitle: Text(ind==0?'Penicilin':ind==1?'Goblin Juice with Kali Mari Powder':'Doloris200'),
           ),
           Row(
             children: <Widget>[
-              FlatButton(
+              ind==0?FlatButton(
                 child: const Text("End Request"),
                 onPressed: () {},
-              ),
+              ):SizedBox(),
               FlatButton(
                 child: const Text("View Request"),
                 onPressed: () {

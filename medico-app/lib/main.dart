@@ -56,7 +56,6 @@ class _MyHomePageState extends State<MyHomePage> {
   PageController _pageController;
 
   FancyTabBar tabBar;
-
   void pageChanged(int pos) {
     _pageController.animateToPage(pos,
         duration: Duration(milliseconds: 300), curve: Curves.linear);
@@ -330,6 +329,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 ListView.builder(
                     physics: BouncingScrollPhysics(),
+                    itemCount: 3,
                     itemBuilder: (ctx, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -356,14 +356,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                           child: Image(
                                             fit: BoxFit.fill,
                                             image: CachedNetworkImageProvider(
-                                                'https://d3utvp06f2exxv.cloudfront.net/article/dengue-fever-do-not-panic-1518.jpg'),
+                                                index == 0
+                                                    ? 'https://d3utvp06f2exxv.cloudfront.net/article/dengue-fever-do-not-panic-1518.jpg'
+                                                    : index == 1
+                                                    ? 'https://ayushology.com/wp-content/uploads/2017/12/how-to-cure-jaundice-at-home-naturally.jpg'
+                                                    : 'http://dahabclinic.com/wp-content/uploads/2017/12/article-enteric-fever.jpg'),
                                           ))),
                                   Align(
                                     alignment: Alignment.bottomLeft,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        'Dengue',
+                                        index==0?'Jaundice':index==1?'Dengue':'Typhoid',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 28,

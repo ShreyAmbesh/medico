@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,22 +14,58 @@ class FirstAid extends StatefulWidget {
 }
 
 class _FirstAidState extends State<FirstAid> {
-
-
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
 
-  List<String> precaution=['some','some','some','some','some','some','some','some','some','some',];
+  List<String> symp1 = [
+    'fatigue',
+    'abdominal pain',
+    'weight loss',
+    'vomiting',
+    'fever',
+    'pale stools',
+    'dark urine'
+  ],
+      symp2 = [
+    'Pain areas: in the abdomen, back, back of the eyes, bones, joints, or muscles',
+    'Whole body: chills, fatigue, fever, or loss of appetite',
+    'Gastrointestinal: nausea or vomiting',
+    'Skin: rashes or red spots',
+    'Also common: easy bruising or headache'
+  ],
+      symp3 = [
+    'Pain areas: in the abdomen or muscles',
+    'Gastrointestinal: bloating, constipation, diarrhoea, nausea, or vomiting',
+    'Whole body: fatigue, fever, chills, loss of appetite, or malaise',
+    'Also common: headache, muscle weakness, rash with small red dots, skin rash, or weight loss'
+  ],
+      symptoms = [];
 
-  List<String> symptoms=['some','some','some','some','some','some','some','some','some','some',];
-
+  List<String> prec1 = [
+    'Drink Clean Water',
+    'Avoid Spicy Foods',
+    'Visit doctor if any symptoms match'
+  ],
+      prec2 = [
+    'Avoid Mosquitoes',
+    'Keep Environment Clean',
+    'Visit doctor if any symptoms match'
+  ],
+      prec3 = [
+    'avoid raw fruits',
+    'avoid drinking untreaed water',
+    'choose hot food',
+    'Visit doctor if any symptoms match'
+  ],
+      precautions = [];
 
   @override
   Widget build(BuildContext context) {
+    symptoms = widget.index == 0 ? symp1 : widget.index == 1 ? symp2 : symp3;
+    precautions = widget.index == 0 ? prec1 : widget.index == 1 ? prec2 : prec3;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: "Montserrat"),
@@ -47,12 +82,18 @@ class _FirstAidState extends State<FirstAid> {
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: Text('Dengue'),
+                  title: Text(widget.index == 0
+                      ? 'Jaundice'
+                      : widget.index == 1 ? 'Dengue' : 'Typhoid'),
                   background: Hero(
                       tag: '${widget.index}',
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl: 'https://d3utvp06f2exxv.cloudfront.net/article/dengue-fever-do-not-panic-1518.jpg',
+                        imageUrl: widget.index == 0
+                            ? 'https://d3utvp06f2exxv.cloudfront.net/article/dengue-fever-do-not-panic-1518.jpg'
+                            : widget.index == 1
+                                ? 'https://ayushology.com/wp-content/uploads/2017/12/how-to-cure-jaundice-at-home-naturally.jpg'
+                                : 'http://dahabclinic.com/wp-content/uploads/2017/12/article-enteric-fever.jpg',
                         placeholder: CircularProgressIndicator(),
                         errorWidget: Icon(Icons.error),
                       )),
@@ -65,7 +106,7 @@ class _FirstAidState extends State<FirstAid> {
                         borderRadius: BorderRadius.circular(12.0)),
                     elevation: 4.0,
                     margin:
-                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                     child: Column(
                       children: <Widget>[
                         SizedBox(
@@ -93,7 +134,7 @@ class _FirstAidState extends State<FirstAid> {
                         borderRadius: BorderRadius.circular(12.0)),
                     elevation: 4.0,
                     margin:
-                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                     child: Column(
                       children: <Widget>[
                         SizedBox(
@@ -116,7 +157,6 @@ class _FirstAidState extends State<FirstAid> {
                       ],
                     ),
                   ),
-
                 ]),
               ),
             ],
@@ -129,7 +169,7 @@ class _FirstAidState extends State<FirstAid> {
   List<Widget> getSymptoms() {
     int index = 1;
     List<Widget> symps = [];
-    while (index <= precaution.length) {
+    while (index <= symptoms.length) {
       symps.add(Padding(
         padding: const EdgeInsets.all(6.0),
         child: ListTile(
@@ -142,7 +182,7 @@ class _FirstAidState extends State<FirstAid> {
               style: TextStyle(fontSize: 14),
             ),
           ),
-          title: Text(precaution[index - 1],
+          title: Text(symptoms[index - 1],
               style: TextStyle(fontSize: 18, fontFamily: "Montserrat")),
         ),
       ));
@@ -151,11 +191,10 @@ class _FirstAidState extends State<FirstAid> {
     return symps;
   }
 
-
   List<Widget> getPrecautions() {
     int index = 1;
     List<Widget> precauts = [];
-    while (index <= precaution.length) {
+    while (index <= precautions.length) {
       precauts.add(Padding(
         padding: const EdgeInsets.all(6.0),
         child: ListTile(
@@ -168,7 +207,7 @@ class _FirstAidState extends State<FirstAid> {
               style: TextStyle(fontSize: 14),
             ),
           ),
-          title: Text(symptoms[index - 1],
+          title: Text(precautions[index - 1],
               style: TextStyle(fontSize: 18, fontFamily: "Montserrat")),
         ),
       ));
@@ -176,5 +215,4 @@ class _FirstAidState extends State<FirstAid> {
     }
     return precauts;
   }
-
 }
