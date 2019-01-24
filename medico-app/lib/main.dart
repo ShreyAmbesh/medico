@@ -1,15 +1,22 @@
+import 'dart:io';
+import 'dart:math';
+
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:medico/DoctorReviews.dart';
-import 'package:medico/MedicineReviews.dart';
-import 'package:medico/MyPrescriptions.dart';
+import 'package:medico/Pages/appointment_form.dart';
+import 'package:medico/Pages/doctor_review_list.dart';
+import 'package:medico/Pages/medicine_review_list.dart';
+import 'package:medico/Pages/opinion_request_list.dart';
+import 'package:medico/Pages/prescription_request_list.dart';
 import 'package:medico/Reminders.dart';
 import 'package:medico/UI/fancy_tab_bar.dart';
-import 'package:medico/appointment_request.dart';
 import 'package:medico/utils/auth.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:medico/utils/first_aid.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class MyApp extends StatelessWidget {
   String _userId;
@@ -78,8 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 tabBar.changePage(index);
               },
               children: <Widget>[
-                Container(
-                  color: Colors.pink,
+                OpinionRequestList(
+                  title: 'some',
+                  subtitle: 'sme',
                 ),
                 CustomScrollView(
                   physics: BouncingScrollPhysics(),
@@ -93,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               onTap: () {
                                 Navigator.of(context)
                                     .push(MaterialPageRoute(builder: (ctx) {
-                                  return AppointmentRequest();
+                                  return AppointmentForm();
                                 }));
                               },
                               child: Card(
@@ -164,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                         builder: (ctx) {
-                                                  return MedicineReview();
+                                                  return MedicineReviewList();
                                                 }));
                                               },
                                               child: Image(
@@ -198,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 Navigator.of(context).push(
                                                     MaterialPageRoute(
                                                         builder: (ctx) {
-                                                  return DoctorReviews();
+                                                  return DoctorReviewList();
                                                 }));
                                               },
                                               child: Image(
@@ -228,15 +236,15 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: double.infinity,
                             child: InkWell(
                               onTap: () {
-                                Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (ctx) {
-                                          return MyPrescriptions();
-                                        }));
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (ctx) {
+                                  return PrescriptionRequestList();
+                                }));
                               },
                               child: Card(
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12.0)),
+                                      borderRadius:
+                                          BorderRadius.circular(12.0)),
                                   child: Padding(
                                     padding: const EdgeInsets.all(30.0),
                                     child: Row(
@@ -259,11 +267,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: double.infinity,
                             child: InkWell(
                               onTap: () {
-                                Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (ctx) {
-                                          return Reminders();
-                                        }));
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (ctx) {
+                                  return Reminders();
+                                }));
                               },
                               child: Card(
                                 shape: RoundedRectangleBorder(
@@ -291,11 +298,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             width: double.infinity,
                             child: InkWell(
                               onTap: () {
-                                Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (ctx) {
-                                          return MedicineReview();
-                                        }));
+                                _pickSaveImage('files');
                               },
                               child: Card(
                                 shape: RoundedRectangleBorder(
@@ -383,6 +386,23 @@ class _MyHomePageState extends State<MyHomePage> {
             )
           ],
         ));
+  }
+
+  Future<String> _pickSaveImage(String imageId) async {
+    File imageFile = await ImagePicker.pickImage(source: ImageSource.camera);
+    var rng = new Random();
+    StorageReference ref = FirebaseStorage.instance
+        .ref()
+        .child(imageId)
+        .child("image${rng.nextInt(100000000)}.jpg");
+    StorageUploadTask uploadTask = ref.putFile(imageFile);
+    return await (await uploadTask.onComplete).ref.getDownloadURL().then((val) async {
+      print(val);
+      await FirebaseDatabase.instance
+          .reference()
+          .child('unverified').push()
+          .set({'imgURL': val.toString(), 'patientID': '9620908970'});
+    });
   }
 
   _launchURL() async {

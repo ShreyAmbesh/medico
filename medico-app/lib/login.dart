@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:medico/utils/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 enum AuthStatus {
   NOT_DETERMINED,
   NOT_LOGGED_IN,
@@ -9,6 +11,7 @@ enum AuthStatus {
 class Login extends StatelessWidget {
   BaseAuth _auth;
   VoidCallback onSignedIn;
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +35,20 @@ class Login extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   VoidCallback onSignedIn;
 
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _authy = FirebaseAuth.instance;
+
+  Future<FirebaseUser> _handleSignIn() async {
+    GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    FirebaseUser user = await _authy.signInWithGoogle(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    ).then((user){
+      onSignedIn();});
+    print("signed in " + user.displayName);
+    return user;
+  }
   MyHomePage({Key key, this.title, this.auth, this.onSignedIn})
       : super(key: key) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
@@ -110,26 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       Padding(
                                         padding: const EdgeInsets.only(
                                             bottom: 20.0),
-                                        child: TextFormField(
-                                            keyboardType: TextInputType
-                                                .emailAddress,
-                                            decoration: InputDecoration(
-                                              hintText: 'Enter Your Email',
-                                              labelText: 'Email',
-                                            ),
-                                            validator: (value) {}),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            bottom: 20.0),
-                                        child: TextFormField(
-                                            keyboardType: TextInputType
-                                                .emailAddress,
-                                            decoration: InputDecoration(
-                                              hintText: 'Enter Your Password',
-                                              labelText: 'Password',
-                                            ),
-                                            validator: (value) {}),
+                                        child: Text('Login With Your Google Account'),
                                       ),
                                       Container(
                                         width: double.infinity,
@@ -149,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           color: Colors.transparent,
                                           child: InkWell(
                                               onTap: () {
-                                                widget.onSignedIn();
+                                                widget._handleSignIn();
                                               },
                                               child: Center(
                                                 child: Text("Sign In",

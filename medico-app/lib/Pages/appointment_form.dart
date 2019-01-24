@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class AppointmentRequest extends StatefulWidget {
+class AppointmentForm extends StatefulWidget {
   @override
-  AppointmentRequestState createState() {
-    return new AppointmentRequestState();
+  AppointmentFormState createState() {
+    return new AppointmentFormState();
   }
 }
 
-class AppointmentRequestState extends State<AppointmentRequest> {
+class AppointmentFormState extends State<AppointmentForm> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
   @override

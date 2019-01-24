@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medico/Pages/medicine_review.dart';
 
-class MedicineReview extends StatelessWidget {
+class MedicineReviewList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
