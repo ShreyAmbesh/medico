@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medico/Pages/medicinepage.dart';
+import 'package:medico/Pages/medicine_review.dart';
 
 class MedicineReview extends StatelessWidget {
   @override
@@ -11,7 +11,7 @@ class MedicineReview extends StatelessWidget {
           return InkWell(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
-                return Medicine();
+                return MedicineReview();
               }));
             },
             child: ListTile(
